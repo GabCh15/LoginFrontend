@@ -1,20 +1,29 @@
 import React, { useState } from "react";
-import { getEthAddress, loginWithEth } from "./services/Authentication";
+import { getEthAddress, registerWithEth } from "./services/Authentication";
 
 export const Register = () => {
+  const [success, setSuccess] = useState(null);
   let address = null;
-  return (
 
-      <button
-        className="btn btn-primary"
-        onClick={async (e) => {
-            e.preventDefault()
-          address = await getEthAddress();
-          if (address)
-            await loginWithEth(address)
-        }}
-      >
-        Login with MetaMask
-      </button>
+  return (
+    <>
+      {success === null && (
+        <button
+          className="btn btn-primary"
+          onClick={async () => {
+            address = await getEthAddress();
+            if (address)
+              setSuccess(
+                (await registerWithEth(address.toLowerCase())).success
+              );
+          }}
+        >
+          Register with MetaMask
+        </button>
+      )}
+      {success !== null && (success &&(
+        <div className="alert alert-success">Succesfully registered</div>
+      )||<div className="alert alert-danger">You're already registered</div>)}
+    </>
   );
 };

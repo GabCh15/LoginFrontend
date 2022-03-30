@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {Register} from "./Register";
+import { Register } from "./Register";
+import { Login } from "./Login";
 
 const routes = [
   {
@@ -8,7 +9,7 @@ const routes = [
     routes: [
       {
         route: "/register",
-        component: <>Register</>,
+        component: <Register />,
         text: "Register",
       },
     ],
@@ -18,12 +19,12 @@ const routes = [
     routes: [
       {
         route: "/login",
-        component: <>Login</>,
+        component: <Login />,
         text: "Login",
       },
       {
         route: "/register",
-        component: <Register/>,
+        component: <Register />,
         text: "Register",
       },
     ],
@@ -37,13 +38,7 @@ export default class Router extends Component {
         <BrowserRouter>
           <div className="d-flex justify-content-center mt-5">
             <Routes>
-              {routes[1].routes.map((route) => (
-                <Route
-                  key={route.route}
-                  path={route.route}
-                  element={route.component}
-                />
-              ))}
+              <Route key={"/"} path={"/"} element={<Auth />} />)
             </Routes>
           </div>
         </BrowserRouter>
@@ -51,3 +46,10 @@ export default class Router extends Component {
     );
   }
 }
+
+var Auth = () => (
+  <div style={{display: "flex",flexDirection:"column",justifyContent: "space-between"}}>
+    <Login />
+    <Register />
+  </div>
+);
